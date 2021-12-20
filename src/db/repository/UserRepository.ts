@@ -1,9 +1,13 @@
-import User, { UserInput, UserSanitizedOutput } from '../models/User'
-import AuthService from '../../api/services/AuthService'
+import User, {
+  UserInput,
+  UserOutput,
+  UserSanitizedOutput,
+} from '../models/User'
+import PasswordHelper from '../../api/utils/helpers/PasswordHelper'
 
 export default class UserRepository {
   public static async create(payload: UserInput): Promise<UserSanitizedOutput> {
-    const hashedPassword = await AuthService.hashPassword({
+    const hashedPassword = await PasswordHelper.hashPassword({
       password: payload.password,
     })
     const updatedUser: UserInput = { ...payload, password: hashedPassword }
@@ -18,5 +22,13 @@ export default class UserRepository {
       updatedAt: user.updatedAt,
     }
     return sanitizedUser
+  }
+
+  public static async getByUsername({
+    username,
+  }: {
+    username: string
+  }): Promise<UserOutput | null> {
+    return User.findOne({ where: { username } })
   }
 }

@@ -1,15 +1,26 @@
-import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
+import { UserLogInCredentials } from '../../db/models/User'
+import ErrorsEnum from '../utils/enums/ErrorsEnum'
+import UserService from './UserService'
+import PasswordHelper from '../utils/helpers/PasswordHelper'
 
 export default class AuthService {
-  public static async hashPassword({
+  public static async logIn({
     password,
-  }: {
-    password: string | undefined
-  }): Promise<string> {
-    if (!password) throw Error('ERROR')
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
-
-    return hashedPassword
+    username,
+  }: UserLogInCredentials): Promise<{ token: string }> {
+    const savedUser = await UserService.getByUsername({ username })
+    if (!savedUser) throw new Error(ErrorsEnum.RESOURCE_NOT_FOUND)
+    const passwordsMatch = await PasswordHelper.comparePaswords({
+      savedPassword: savedUser.password,
+      password,
+    })
+    if (!passwordsMatch) throw new Error(ErrorsEnum.INVALID_CREDENTIALS)
+    const token = jwt.sign({}, process.env.APP_SECRET_KEY ?? '', {
+      expiresIn: '3h',
+    })
+    console.log(token)
+    return { token }
   }
 }

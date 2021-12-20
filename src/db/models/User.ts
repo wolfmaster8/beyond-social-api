@@ -22,6 +22,9 @@ export interface UserOutput extends Required<UserAttributes> {}
 
 export interface UserSanitizedOutput extends Omit<UserOutput, 'password'> {}
 
+export interface UserLogInCredentials
+  extends Pick<UserAttributes, 'username' | 'password'> {}
+
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public id!: number
 
@@ -60,10 +63,12 @@ User.init(
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: 'username',
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: 'email',
     },
     password: {
       type: DataTypes.STRING,
