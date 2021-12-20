@@ -1,7 +1,10 @@
 import express, { Application } from 'express'
 import routes from './api/routes'
+import dbInit from './db/init'
 
 require('dotenv').config({ path: '.env' })
+
+dbInit()
 
 const app: Application = express()
 const port = 3000

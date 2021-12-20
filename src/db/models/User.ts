@@ -48,10 +48,12 @@ User.init(
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: 'first_name',
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: 'last_name',
     },
     username: {
       type: DataTypes.STRING,
@@ -65,10 +67,19 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
+    },
   },
   {
     timestamps: true,
     sequelize: sequelizeConnection,
+    tableName: 'users',
   }
 )
 

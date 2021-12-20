@@ -9,7 +9,7 @@ export default class UserController {
       const user = await UserService.create(payload)
       return res.status(200).json({ message: user })
     } catch (e) {
-      console.log(e)
+      // console.log(e)
       return res.status(500).json({ e })
     }
   }
