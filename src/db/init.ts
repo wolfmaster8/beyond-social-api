@@ -1,5 +1,4 @@
 const isDev = process.env.NODE_ENV === 'development'
 
-const dbInit = () => {
-}
+const dbInit = () => {}
 export default dbInit

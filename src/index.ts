@@ -4,16 +4,16 @@ const app: Application = express()
 const port = 3000
 
 // Body parsing Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.get('/', async(req: Request, res: Response): Promise<Response> => {
-    return res.status(200).send({ message: `Welcome to Beyond Social API` })
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.get('/', async (req: Request, res: Response): Promise<Response> => {
+  return res.status(200).send({ message: `Welcome to Beyond Social API` })
 })
 
 try {
-    app.listen(port, () => {
-        console.log(`Server running on http://localhost:${port}`)
-    })
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`)
+  })
 } catch (error: any) {
-    console.log(`Error occurred: ${error.message}`)
+  console.log(`Error occurred: ${error.message}`)
 }
