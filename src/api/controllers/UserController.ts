@@ -7,7 +7,7 @@ export default class UserController {
     try {
       const payload: UserInput = req.body
       const user = await UserService.create(payload)
-      return res.status(200).json({ message: user })
+      return res.status(201).json(user)
     } catch (e) {
       // console.log(e)
       return res.status(500).json({ e })

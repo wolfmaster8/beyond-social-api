@@ -20,6 +20,8 @@ export interface UserInput
 
 export interface UserOutput extends Required<UserAttributes> {}
 
+export interface UserSanitizedOutput extends Omit<UserOutput, 'password'> {}
+
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public id!: number
 
