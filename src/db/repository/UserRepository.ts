@@ -31,4 +31,12 @@ export default class UserRepository {
   }): Promise<UserOutput | null> {
     return User.findOne({ where: { username } })
   }
+
+  public static async getByEmail({
+    email,
+  }: {
+    email: string
+  }): Promise<UserOutput | null> {
+    return User.findOne({ where: { email } })
+  }
 }

@@ -9,10 +9,8 @@ export default class AuthController {
       const token = await AuthService.logIn({ username, password })
       return res.status(200).json(token)
     } catch (e: any) {
-      console.log(e)
-
       if (e?.message) {
-        return res.status(500).json({
+        return res.status(401).json({
           message:
             'Parece que el usuario o la contraseña no corresponden. Revisa tus credenciales e intenta nuevamente',
         })
