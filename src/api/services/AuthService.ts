@@ -17,10 +17,13 @@ export default class AuthService {
       password,
     })
     if (!passwordsMatch) throw new Error(ErrorsEnum.INVALID_CREDENTIALS)
-    const token = jwt.sign({}, process.env.APP_SECRET_KEY ?? '', {
-      expiresIn: '3h',
-    })
-    console.log(token)
+    const token = jwt.sign(
+      { userId: savedUser.id },
+      process.env.APP_SECRET_KEY ?? '',
+      {
+        expiresIn: '3h',
+      }
+    )
     return { token }
   }
 }

@@ -13,4 +13,8 @@ export default class UserController {
       return res.status(500).json({ e })
     }
   }
+
+  public static async test(req: Request, res: Response) {
+    return res.status(200).json({ id: req.body.userId })
+  }
 }
