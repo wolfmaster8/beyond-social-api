@@ -1,16 +1,16 @@
-import { DataTypes, Model, Optional } from 'sequelize'
+import { DataTypes, Model } from 'sequelize'
 import sequelizeConnection from '../config'
 
 interface PostLikeAttributes {
   id: number
   userId: number
-  postId: number
+  postId?: number
   createdAt?: Date
   updatedAt?: Date
 }
 
 export interface PostLikeInput
-  extends Optional<PostLikeAttributes, 'userId' | 'postId'> {}
+  extends Pick<PostLikeAttributes, 'userId' | 'postId'> {}
 
 export interface PostLikeOutput extends Required<PostLikeAttributes> {}
 

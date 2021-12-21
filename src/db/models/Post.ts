@@ -1,9 +1,12 @@
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
+import PostLike from './PostLike'
+import PostComment from './PostComment'
+import User from './User'
 
 interface PostAttributes {
   id: number
-  userId: number
+  userId?: number
   content: string
   createdAt?: Date
   updatedAt?: Date
@@ -33,16 +36,6 @@ Post.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    userId: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      field: 'user_id',
-      references: {
-        key: 'id',
-        model: 'users',
-      },
-    },
-
     content: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -63,5 +56,9 @@ Post.init(
     charset: 'utf8mb4',
   }
 )
+Post.belongsTo(User, { foreignKey: 'user_id' })
+Post.hasMany(PostComment, { foreignKey: 'postId' })
+
+Post.hasMany(PostLike, { foreignKey: 'postId' })
 
 export default Post

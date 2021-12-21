@@ -1,17 +1,20 @@
-import { DataTypes, Model, Optional } from 'sequelize'
+import { DataTypes, Model } from 'sequelize'
 import sequelizeConnection from '../config'
 
 interface PostCommentAttributes {
   id: number
   userId: number
-  postId: number
+  postId?: number
   content: string
   createdAt?: Date
   updatedAt?: Date
 }
 
+/* export interface PostCommentInput
+  extends Optional<PostCommentAttributes, 'content' | 'userId' | 'postId'> {} */
+
 export interface PostCommentInput
-  extends Optional<PostCommentAttributes, 'content' | 'userId' | 'postId'> {}
+  extends Pick<PostCommentAttributes, 'content' | 'userId' | 'postId'> {}
 
 export interface PostCommentOutput extends Required<PostCommentAttributes> {}
 
@@ -70,6 +73,7 @@ PostComment.init(
       field: 'updated_at',
     },
   },
+
   {
     timestamps: true,
     sequelize: sequelizeConnection,
