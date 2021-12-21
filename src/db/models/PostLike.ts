@@ -4,7 +4,7 @@ import sequelizeConnection from '../config'
 interface PostLikeAttributes {
   id: number
   userId: number
-  postId?: number
+  postId: number
   createdAt?: Date
   updatedAt?: Date
 }

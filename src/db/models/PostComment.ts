@@ -4,7 +4,7 @@ import sequelizeConnection from '../config'
 interface PostCommentAttributes {
   id: number
   userId: number
-  postId?: number
+  postId: number
   content: string
   createdAt?: Date
   updatedAt?: Date

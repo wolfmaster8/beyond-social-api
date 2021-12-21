@@ -10,7 +10,10 @@ export default class PostRepository {
   public static async findOne({ id }: { id: number }) {
     return Post.findOne({
       where: { id },
-      include: [{ model: PostComment }, { model: PostLike }],
+      include: [
+        { model: PostComment, as: 'comments' },
+        { model: PostLike, as: 'likes', attributes: ['id', 'userId'] },
+      ],
     })
   }
 
