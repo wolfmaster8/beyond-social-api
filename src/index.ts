@@ -11,10 +11,14 @@ const app: Application = express()
 app.disable('x-powered-by')
 const port = 3333
 
+const corsOptions = {
+  origin: ['http://localhost:3000'],
+}
+
 // Body parsing Middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors())
+app.use(cors(corsOptions))
 
 // Main Routes
 app.use('/api/v1', routes)
