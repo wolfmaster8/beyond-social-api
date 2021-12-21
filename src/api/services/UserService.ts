@@ -4,9 +4,31 @@ import {
   UserSanitizedOutput,
 } from '../../db/models/User'
 import UserRepository from '../../db/repository/UserRepository'
+import ErrorsEnum from '../utils/enums/ErrorsEnum'
 
 export default class UserService {
   public static async create(payload: UserInput): Promise<UserSanitizedOutput> {
+    if (
+      !payload.username ||
+      !payload.password ||
+      !payload.email ||
+      !payload.firstName ||
+      !payload.lastName
+    )
+      throw Error(ErrorsEnum.BAD_REQUEST)
+    const usernameAlreadyRegistered = await this.getByUsername({
+      username: payload.username,
+    })
+
+    if (usernameAlreadyRegistered)
+      throw Error(ErrorsEnum.USERNAME_ALREADY_REGISTERED)
+
+    const emailAlreadyRegistered = await this.getByEmail({
+      email: payload.email,
+    })
+
+    if (emailAlreadyRegistered) throw Error(ErrorsEnum.EMAIL_ALREADY_REGISTERED)
+
     const user = await UserRepository.create(payload)
     return user
   }
@@ -17,5 +39,13 @@ export default class UserService {
     username: string
   }): Promise<UserOutput | null> {
     return UserRepository.getByUsername({ username })
+  }
+
+  public static async getByEmail({
+    email,
+  }: {
+    email: string
+  }): Promise<UserOutput | null> {
+    return UserRepository.getByEmail({ email })
   }
 }
