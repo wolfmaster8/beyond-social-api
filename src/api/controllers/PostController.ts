@@ -19,4 +19,22 @@ export default class PostController {
       return res.status(500).json({ e })
     }
   }
+
+  public static async addCommentToPost(req: Request, res: Response) {
+    try {
+      const posts = await PostService.addCommentToPost(req.body)
+      return res.status(201).json(posts)
+    } catch (e) {
+      return res.status(500).json({ e })
+    }
+  }
+
+  public static async addLikeToPost(req: Request, res: Response) {
+    try {
+      const posts = await PostService.addLikeToPost(req.body)
+      return res.status(201).json(posts)
+    } catch (e) {
+      return res.status(500).json({ e })
+    }
+  }
 }
