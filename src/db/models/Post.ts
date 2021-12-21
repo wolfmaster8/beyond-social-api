@@ -60,6 +60,7 @@ Post.init(
     timestamps: true,
     sequelize: sequelizeConnection,
     tableName: 'posts',
+    charset: 'utf8mb4',
   }
 )
 

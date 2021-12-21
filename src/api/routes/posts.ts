@@ -5,5 +5,6 @@ import AuthMiddleware from '../middlewares/AuthMiddleware'
 const postRoutes = Router()
 
 postRoutes.post('/', AuthMiddleware, PostController.create)
+postRoutes.get('/user', AuthMiddleware, PostController.getUserPosts)
 
 export default postRoutes

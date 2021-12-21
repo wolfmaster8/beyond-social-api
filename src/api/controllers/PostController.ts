@@ -10,4 +10,13 @@ export default class PostController {
       return res.status(500).json({ e })
     }
   }
+
+  public static async getUserPosts(req: Request, res: Response) {
+    try {
+      const posts = await PostService.getUserPosts({ userId: req.body.userId })
+      return res.status(200).json(posts)
+    } catch (e) {
+      return res.status(500).json({ e })
+    }
+  }
 }
