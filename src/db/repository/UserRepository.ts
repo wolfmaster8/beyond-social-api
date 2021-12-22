@@ -4,6 +4,7 @@ import User, {
   UserSanitizedOutput,
 } from '../models/User'
 import PasswordHelper from '../../api/utils/helpers/PasswordHelper'
+import { GenericIdParameter } from '../../api/utils/GlobalTypes'
 
 export default class UserRepository {
   public static async create(payload: UserInput): Promise<UserSanitizedOutput> {
@@ -22,6 +23,21 @@ export default class UserRepository {
       updatedAt: user.updatedAt,
     }
     return sanitizedUser
+  }
+
+  public static async getUserProfile({
+    id,
+  }: GenericIdParameter): Promise<UserOutput | null> {
+    return this.getById({ id })
+  }
+
+  public static async getById({
+    id,
+  }: GenericIdParameter): Promise<UserOutput | null> {
+    return User.findOne({
+      where: { id },
+      attributes: ['id', 'firstName', 'lastName'],
+    })
   }
 
   public static async getByUsername({

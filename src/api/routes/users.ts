@@ -6,6 +6,6 @@ const userRoutes = Router()
 
 userRoutes.post('/', UserController.create)
 
-userRoutes.get('/test', AuthMiddleware, UserController.test)
+userRoutes.get('/profile', AuthMiddleware, UserController.profile)
 
 export default userRoutes
