@@ -11,9 +11,6 @@ interface PostCommentAttributes {
   updatedAt?: Date
 }
 
-/* export interface PostCommentInput
-  extends Optional<PostCommentAttributes, 'content' | 'userId' | 'postId'> {} */
-
 export interface PostCommentInput
   extends Pick<PostCommentAttributes, 'content' | 'userId' | 'postId'> {}
 
