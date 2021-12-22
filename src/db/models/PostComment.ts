@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize'
 import sequelizeConnection from '../config'
+import User from './User'
 
 interface PostCommentAttributes {
   id: number
@@ -80,5 +81,7 @@ PostComment.init(
     tableName: 'post_comments',
   }
 )
+
+PostComment.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 
 export default PostComment

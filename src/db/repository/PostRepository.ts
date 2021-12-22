@@ -27,7 +27,24 @@ export default class PostRepository {
     return Post.findOne({
       where: { id },
       include: [
-        { model: PostComment, as: 'comments' },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'username', 'firstName', 'lastName'],
+        },
+        {
+          model: PostComment,
+          as: 'comments',
+          separate: true,
+          order: [['createdAt', 'DESC']],
+          include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: ['id', 'username', 'firstName', 'lastName'],
+            },
+          ],
+        },
         { model: PostLike, as: 'likes', attributes: ['id', 'userId'] },
       ],
     })
