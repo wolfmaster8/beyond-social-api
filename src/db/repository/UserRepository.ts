@@ -77,4 +77,14 @@ export default class UserRepository {
   }): Promise<UserOutput | null> {
     return User.findOne({ where: { email } })
   }
+
+  public static async update(payload: UserInput & { userId: number }) {
+    console.log(payload)
+    const user = await User.findOne({
+      where: { id: payload.userId },
+    })
+    user?.set(payload)
+    await user?.save()
+    return payload
+  }
 }
