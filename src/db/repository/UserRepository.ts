@@ -5,6 +5,9 @@ import User, {
 } from '../models/User'
 import PasswordHelper from '../../api/utils/helpers/PasswordHelper'
 import { GenericIdParameter } from '../../api/utils/GlobalTypes'
+import Post from '../models/Post'
+import PostComment from '../models/PostComment'
+import PostLike from '../models/PostLike'
 
 export default class UserRepository {
   public static async create(payload: UserInput): Promise<UserSanitizedOutput> {
@@ -23,6 +26,25 @@ export default class UserRepository {
       updatedAt: user.updatedAt,
     }
     return sanitizedUser
+  }
+
+  public static async getUserWithPosts({ id }: GenericIdParameter) {
+    return User.findOne({
+      where: { id },
+      attributes: ['id', 'firstName', 'lastName', 'email', 'username'],
+      include: [
+        {
+          model: Post,
+          as: 'posts',
+          separate: true,
+          order: [['createdAt', 'DESC']],
+          include: [
+            { model: PostComment, as: 'comments' },
+            { model: PostLike, as: 'likes', attributes: ['id', 'userId'] },
+          ],
+        },
+      ],
+    })
   }
 
   public static async getUserProfile({

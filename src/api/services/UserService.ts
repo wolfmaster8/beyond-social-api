@@ -34,6 +34,12 @@ export default class UserService {
     return user
   }
 
+  public static async getUserWithPosts({
+    id,
+  }: GenericIdParameter): Promise<UserOutput | null> {
+    return UserRepository.getUserWithPosts({ id })
+  }
+
   public static async getUserProfile({
     id,
   }: GenericIdParameter): Promise<UserOutput | null> {
