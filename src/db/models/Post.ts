@@ -65,7 +65,7 @@ Post.init(
     charset: 'utf8mb4',
   }
 )
-Post.belongsTo(User, { foreignKey: 'userId' })
+Post.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 Post.hasMany(PostComment, { foreignKey: 'postId', as: 'comments' })
 
 Post.hasMany(PostLike, { foreignKey: 'postId', as: 'likes' })
