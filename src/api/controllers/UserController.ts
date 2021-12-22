@@ -45,10 +45,17 @@ export default class UserController {
 
   public static async getUserWithPosts(req: Request, res: Response) {
     try {
-      const { userId } = req.body
-      const user = await UserService.getUserWithPosts({ id: userId })
+      const { id } = req.params
+      const user = await UserService.getUserWithPosts({ id: Number(id) })
       return res.status(200).json(user)
-    } catch (e) {
+    } catch (e: any) {
+      if (e?.message) {
+        if (e.message === ErrorsEnum.NOT_FOUND) {
+          return res.status(400).json({
+            message: 'No encontramos al usuario que buscas.',
+          })
+        }
+      }
       return res
         .status(500)
         .json({ message: 'Ocurrió un error al recuperar tu perfil' })
