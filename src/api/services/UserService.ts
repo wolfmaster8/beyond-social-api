@@ -5,6 +5,7 @@ import {
 } from '../../db/models/User'
 import UserRepository from '../../db/repository/UserRepository'
 import ErrorsEnum from '../utils/enums/ErrorsEnum'
+import { GenericIdParameter } from '../utils/GlobalTypes'
 
 export default class UserService {
   public static async create(payload: UserInput): Promise<UserSanitizedOutput> {
@@ -31,6 +32,12 @@ export default class UserService {
 
     const user = await UserRepository.create(payload)
     return user
+  }
+
+  public static async getUserProfile({
+    id,
+  }: GenericIdParameter): Promise<UserOutput | null> {
+    return UserRepository.getUserProfile({ id })
   }
 
   public static async getByUsername({

@@ -31,7 +31,15 @@ export default class UserController {
     }
   }
 
-  public static async test(req: Request, res: Response) {
-    return res.status(200).json({ id: req.body.userId })
+  public static async profile(req: Request, res: Response) {
+    try {
+      const { userId } = req.body
+      const user = await UserService.getUserProfile({ id: userId })
+      return res.status(200).json(user)
+    } catch (e) {
+      return res
+        .status(500)
+        .json({ message: 'Ocurrió un error al recuperar tu perfil' })
+    }
   }
 }
