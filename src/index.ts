@@ -1,5 +1,6 @@
 import express, { Application } from 'express'
 import cors from 'cors'
+import fileUpload from 'express-fileupload'
 import routes from './api/routes'
 import dbInit from './db/init'
 
@@ -16,6 +17,8 @@ const corsOptions = {
 }
 
 // Body parsing Middleware
+app.use(fileUpload({ createParentPath: true }))
+app.use(express.static('uploads'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors(corsOptions))

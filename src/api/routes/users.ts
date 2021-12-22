@@ -14,4 +14,10 @@ userRoutes.get(
 )
 userRoutes.patch('/', AuthMiddleware, UserController.update)
 
+userRoutes.post(
+  '/upload-profile-photo',
+  AuthMiddleware,
+  UserController.uploadAvatar
+)
+
 export default userRoutes

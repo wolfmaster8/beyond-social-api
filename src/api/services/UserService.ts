@@ -57,7 +57,7 @@ export default class UserService {
     return UserRepository.getByEmail({ email })
   }
 
-  public static async update(payload: UserInput & { userId: number }) {
+  public static async update(payload: Partial<UserInput> & { userId: number }) {
     if (payload.password || payload.createdAt || payload.updatedAt)
       throw Error(ErrorsEnum.BAD_REQUEST)
 

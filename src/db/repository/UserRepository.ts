@@ -83,8 +83,7 @@ export default class UserRepository {
     return User.findOne({ where: { email } })
   }
 
-  public static async update(payload: UserInput & { userId: number }) {
-    console.log(payload)
+  public static async update(payload: Partial<UserInput> & { userId: number }) {
     const user = await User.findOne({
       where: { id: payload.userId },
     })
