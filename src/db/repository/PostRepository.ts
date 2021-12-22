@@ -7,6 +7,16 @@ export default class PostRepository {
     return Post.create(payload)
   }
 
+  public static async feed() {
+    return Post.findAll({
+      order: [['createdAt', 'DESC']],
+      include: [
+        { model: PostComment, as: 'comments' },
+        { model: PostLike, as: 'likes', attributes: ['id', 'userId'] },
+      ],
+    })
+  }
+
   public static async findOne({ id }: { id: number }) {
     return Post.findOne({
       where: { id },

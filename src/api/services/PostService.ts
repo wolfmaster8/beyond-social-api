@@ -11,6 +11,10 @@ export default class PostService {
     return PostRepository.create(payload)
   }
 
+  public static async feed() {
+    return PostRepository.feed()
+  }
+
   public static async findOne({ id }: { id: number }) {
     const post = await PostRepository.findOne({ id })
     if (!post) throw Error(ErrorsEnum.NOT_FOUND)

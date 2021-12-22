@@ -30,6 +30,15 @@ export default class PostController {
     }
   }
 
+  public static async feed(req: Request, res: Response) {
+    try {
+      const posts = await PostService.feed()
+      return res.status(200).json(posts)
+    } catch (e) {
+      return res.status(500).json({ e })
+    }
+  }
+
   public static async getUserPosts(req: Request, res: Response) {
     try {
       const posts = await PostService.getUserPosts({ userId: req.body.userId })
