@@ -45,8 +45,8 @@ export default class UserController {
 
   public static async getUserWithPosts(req: Request, res: Response) {
     try {
-      const { id } = req.params
-      const user = await UserService.getUserWithPosts({ id: Number(id) })
+      const { username } = req.params
+      const user = await UserService.getUserWithPosts({ username })
       return res.status(200).json(user)
     } catch (e: any) {
       if (e?.message) {

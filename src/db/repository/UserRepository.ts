@@ -28,9 +28,9 @@ export default class UserRepository {
     return sanitizedUser
   }
 
-  public static async getUserWithPosts({ id }: GenericIdParameter) {
+  public static async getUserWithPosts({ username }: { username: string }) {
     return User.findOne({
-      where: { id },
+      where: { username },
       attributes: ['id', 'firstName', 'lastName', 'email', 'username'],
       include: [
         {
@@ -39,6 +39,11 @@ export default class UserRepository {
           separate: true,
           order: [['createdAt', 'DESC']],
           include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: ['id', 'username', 'firstName', 'lastName'],
+            },
             { model: PostComment, as: 'comments' },
             { model: PostLike, as: 'likes', attributes: ['id', 'userId'] },
           ],
@@ -58,7 +63,7 @@ export default class UserRepository {
   }: GenericIdParameter): Promise<UserOutput | null> {
     return User.findOne({
       where: { id },
-      attributes: ['id', 'firstName', 'lastName'],
+      attributes: ['id', 'firstName', 'lastName', 'username'],
     })
   }
 

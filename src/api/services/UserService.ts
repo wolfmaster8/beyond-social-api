@@ -26,9 +26,11 @@ export default class UserService {
   }
 
   public static async getUserWithPosts({
-    id,
-  }: GenericIdParameter): Promise<UserOutput | null> {
-    const user = await UserRepository.getUserWithPosts({ id })
+    username,
+  }: {
+    username: string
+  }): Promise<UserOutput | null> {
+    const user = await UserRepository.getUserWithPosts({ username })
     if (!user) throw Error(ErrorsEnum.NOT_FOUND)
     return user
   }
