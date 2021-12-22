@@ -9,8 +9,8 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const dbInit = async () => {
   await User.sync({ alter: isDev })
-  await Post.sync({ alter: isDev, logging: true })
-  await PostComment.sync({ alter: isDev, logging: true })
+  await Post.sync({ alter: isDev })
+  await PostComment.sync({ alter: isDev })
   await PostLike.sync({ alter: isDev })
 }
 

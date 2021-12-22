@@ -70,4 +70,6 @@ Post.hasMany(PostComment, { foreignKey: 'postId', as: 'comments' })
 
 Post.hasMany(PostLike, { foreignKey: 'postId', as: 'likes' })
 
+User.hasMany(Post, { foreignKey: 'userId', as: 'posts' })
+
 export default Post

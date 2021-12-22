@@ -5,6 +5,9 @@ import User, {
 } from '../models/User'
 import PasswordHelper from '../../api/utils/helpers/PasswordHelper'
 import { GenericIdParameter } from '../../api/utils/GlobalTypes'
+import Post from '../models/Post'
+import PostComment from '../models/PostComment'
+import PostLike from '../models/PostLike'
 
 export default class UserRepository {
   public static async create(payload: UserInput): Promise<UserSanitizedOutput> {
@@ -25,6 +28,30 @@ export default class UserRepository {
     return sanitizedUser
   }
 
+  public static async getUserWithPosts({ username }: { username: string }) {
+    return User.findOne({
+      where: { username },
+      attributes: ['id', 'firstName', 'lastName', 'email', 'username'],
+      include: [
+        {
+          model: Post,
+          as: 'posts',
+          separate: true,
+          order: [['createdAt', 'DESC']],
+          include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: ['id', 'username', 'firstName', 'lastName'],
+            },
+            { model: PostComment, as: 'comments' },
+            { model: PostLike, as: 'likes', attributes: ['id', 'userId'] },
+          ],
+        },
+      ],
+    })
+  }
+
   public static async getUserProfile({
     id,
   }: GenericIdParameter): Promise<UserOutput | null> {
@@ -36,7 +63,7 @@ export default class UserRepository {
   }: GenericIdParameter): Promise<UserOutput | null> {
     return User.findOne({
       where: { id },
-      attributes: ['id', 'firstName', 'lastName'],
+      attributes: ['id', 'firstName', 'lastName', 'username'],
     })
   }
 
@@ -54,5 +81,15 @@ export default class UserRepository {
     email: string
   }): Promise<UserOutput | null> {
     return User.findOne({ where: { email } })
+  }
+
+  public static async update(payload: UserInput & { userId: number }) {
+    console.log(payload)
+    const user = await User.findOne({
+      where: { id: payload.userId },
+    })
+    user?.set(payload)
+    await user?.save()
+    return payload
   }
 }
