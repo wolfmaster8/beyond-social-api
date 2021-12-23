@@ -20,6 +20,20 @@
 ### Tests
 * Por tiempo, decidí solo realizar algunos tests automatizados.
 
+### Migrations
+* Usualmente utilizo migrations para hacer cambios en la base de datos. En esta ocasión, decidí irme por algo más rápido, utilizando la función `sync` de sequelize que edita la base de datos a medida que el model va cambiando.
+
+## Estructura y workflow del proyecto.
+* **api/**
+  * **controllers**: aquí están los controladores de nuestra aplicación. Los controladores son responsables únicamente por recibir los parámetros / body del request, llamar un servicio y retornar u objeto y/o estatus.
+  * **middlewares**: aquí están los middlewares. Lógica que está entre la petición y el controller. Aquí se crean validaciones de diferentes tipos.
+  * **routes**: todos los endpoints están aquí.
+  * **services**: la capa de Servicio, también conocida como Business, contiene las reglas de negocio y la lógica de nuestra aplicación. Es llamada por el controller.
+  * **utils**: adentro están todas las funciones utilitarias o helpers de la aplicación.
+* **db/**
+  * **models**: aquí están los models de nuestra aplicación. Los modelos reflejan la estructura de nuestra base de datos.
+  * **repository**: la capa de Repositorio es la encargada de comunicarse con la base de datos. Esta capa es llamada por la capa de Servicio o Service.
+  
 ## Configurando el Proyecto
 ### Requisitos
 * **NodeJS**: versión 12 o mayor
