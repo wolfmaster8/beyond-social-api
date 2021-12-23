@@ -14,6 +14,9 @@
 ### Autenticación
 * Usualmente utilizaria una biblioteca de autenticación o una tabla en la base de datos para controlar los tokens/sesiones de los usuarios. Por tiempo y por todas las funcionalidades adicionales que esto incluye decidí no implementar esto. Esto hace que los tokens no sean revocados aún así cuando el usuario haga logout desde el frontend. En este caso, tocaría esperar que el token expire.
 
+### Subida de Archivos
+* Usualmente utilizaria servicios como S3 de AWS o Blob Storage de Azure para subir archivos. En este caso, los archivos quedan de forma local en la API en la carpeta `uploads`.
+
 ## Configurando el Proyecto
 ### Requisitos
 * **NodeJS**: versión 12 o mayor
