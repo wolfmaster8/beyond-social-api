@@ -9,8 +9,7 @@ interface PostLikeAttributes {
   updatedAt?: Date
 }
 
-export interface PostLikeInput
-  extends Pick<PostLikeAttributes, 'userId' | 'postId'> {}
+export interface PostLikeInput extends Partial<PostLikeAttributes> {}
 
 export interface PostLikeOutput extends Required<PostLikeAttributes> {}
 
