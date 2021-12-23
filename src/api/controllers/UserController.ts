@@ -39,7 +39,6 @@ export default class UserController {
       const user = await UserService.getUserProfile({ id: userId })
       return res.status(200).json(user)
     } catch (e) {
-      console.log(e)
       return res
         .status(500)
         .json({ message: 'Ocurrió un error al recuperar tu perfil' })
@@ -95,12 +94,10 @@ export default class UserController {
 
   public static async uploadAvatar(req: Request, res: Response) {
     try {
-      console.log(req.files)
       if (!req.files) throw Error(ErrorsEnum.BAD_REQUEST)
 
       const avatar = req.files.avatar as UploadedFile
 
-      console.log(req.files.avatar)
       if (!avatar.name.match(/\.(jpg|jpeg|png)$/i))
         throw Error(ErrorsEnum.BAD_REQUEST)
 
@@ -118,7 +115,6 @@ export default class UserController {
 
       return res.status(201).json()
     } catch (e) {
-      console.log(e)
       return res
         .status(500)
         .json({ message: 'Ocurrió un error al subir tu foto' })

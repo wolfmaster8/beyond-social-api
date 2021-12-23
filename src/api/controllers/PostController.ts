@@ -18,7 +18,6 @@ export default class PostController {
       const post = await PostService.findOne({ id: Number(postId) })
       return res.status(200).json(post)
     } catch (e: any) {
-      console.log(e)
       if (e?.message) {
         if (e.message === ErrorsEnum.NOT_FOUND) {
           return res.status(404).json({
