@@ -39,6 +39,7 @@ export default class UserController {
       const user = await UserService.getUserProfile({ id: userId })
       return res.status(200).json(user)
     } catch (e) {
+      console.log(e)
       return res
         .status(500)
         .json({ message: 'Ocurrió un error al recuperar tu perfil' })
@@ -114,6 +115,7 @@ export default class UserController {
 
       return res.status(201).json()
     } catch (e) {
+      console.log(e)
       return res
         .status(500)
         .json({ message: 'Ocurrió un error al subir tu foto' })

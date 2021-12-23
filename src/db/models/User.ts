@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
+import UserHelper from '../../api/utils/helpers/UserHelper'
 
 interface UserAttributes {
   id: number
@@ -82,6 +83,15 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
       field: 'avatar_url',
+      get() {
+        const url = this.getDataValue('avatarUrl')
+        if (!url) {
+          return UserHelper.generateGravatarUri({
+            email: this.getDataValue('email'),
+          })
+        }
+        return this.getDataValue('avatarUrl')
+      },
     },
     createdAt: {
       type: DataTypes.DATE,
