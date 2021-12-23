@@ -90,7 +90,7 @@ User.init(
             email: this.getDataValue('email'),
           })
         }
-        return this.getDataValue('avatarUrl')
+        return `${process.env.API_URL}${this.getDataValue('avatarUrl')}`
       },
     },
     createdAt: {

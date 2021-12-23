@@ -17,11 +17,11 @@ const corsOptions = {
 }
 
 // Body parsing Middleware
-app.use(fileUpload({ createParentPath: true }))
-app.use(express.static('uploads'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors(corsOptions))
+app.use(fileUpload({ createParentPath: true }))
+app.use('/uploads', express.static('uploads'))
 
 // Main Routes
 app.use('/api/v1', routes)

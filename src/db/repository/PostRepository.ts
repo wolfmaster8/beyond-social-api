@@ -37,7 +37,14 @@ export default class PostRepository {
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'username', 'firstName', 'lastName', 'avatarUrl'],
+          attributes: [
+            'id',
+            'username',
+            'firstName',
+            'lastName',
+            'avatarUrl',
+            'email',
+          ],
         },
         {
           model: PostComment,
