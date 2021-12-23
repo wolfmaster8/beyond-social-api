@@ -13,6 +13,9 @@ const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
   host: dbHost,
   port: Number(dbPort),
   dialect: dbDriver,
+  dialectOptions: {
+    charset: 'utf8mb4',
+  },
 })
 
 export default sequelizeConnection

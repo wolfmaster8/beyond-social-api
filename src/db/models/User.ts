@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize'
 import sequelizeConnection from '../config'
+import UserHelper from '../../api/utils/helpers/UserHelper'
 
 interface UserAttributes {
   id: number
@@ -8,6 +9,7 @@ interface UserAttributes {
   username: string
   email: string
   password: string
+  avatarUrl?: string
   createdAt?: Date
   updatedAt?: Date
 }
@@ -20,7 +22,8 @@ export interface UserInput
 
 export interface UserOutput extends Required<UserAttributes> {}
 
-export interface UserSanitizedOutput extends Omit<UserOutput, 'password'> {}
+export interface UserSanitizedOutput
+  extends Omit<UserOutput, 'password' | 'avatarUrl'> {}
 
 export interface UserLogInCredentials
   extends Pick<UserAttributes, 'username' | 'password'> {}
@@ -37,6 +40,8 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public email!: string
 
   public password!: string
+
+  public avatarUrl!: string
 
   public readonly createdAt!: Date
 
@@ -73,6 +78,20 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    avatarUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 'avatar_url',
+      get() {
+        const url = this.getDataValue('avatarUrl')
+        if (!url) {
+          return UserHelper.generateGravatarUri({
+            email: this.getDataValue('email'),
+          })
+        }
+        return `${process.env.API_URL}${this.getDataValue('avatarUrl')}`
+      },
     },
     createdAt: {
       type: DataTypes.DATE,

@@ -4,6 +4,10 @@ import User, {
   UserSanitizedOutput,
 } from '../models/User'
 import PasswordHelper from '../../api/utils/helpers/PasswordHelper'
+import { GenericIdParameter } from '../../api/utils/GlobalTypes'
+import Post from '../models/Post'
+import PostComment from '../models/PostComment'
+import PostLike from '../models/PostLike'
 
 export default class UserRepository {
   public static async create(payload: UserInput): Promise<UserSanitizedOutput> {
@@ -24,11 +28,88 @@ export default class UserRepository {
     return sanitizedUser
   }
 
+  public static async getUserWithPosts({ username }: { username: string }) {
+    return User.findOne({
+      where: { username },
+      attributes: [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'username',
+        'avatarUrl',
+      ],
+      include: [
+        {
+          model: Post,
+          as: 'posts',
+          separate: true,
+          order: [['createdAt', 'DESC']],
+          include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: [
+                'id',
+                'username',
+                'firstName',
+                'lastName',
+                'avatarUrl',
+                'email',
+              ],
+            },
+            { model: PostComment, as: 'comments' },
+            { model: PostLike, as: 'likes', attributes: ['id', 'userId'] },
+          ],
+        },
+      ],
+    })
+  }
+
+  public static async getUserProfile({
+    id,
+  }: GenericIdParameter): Promise<UserOutput | null> {
+    return this.getById({ id })
+  }
+
+  public static async getById({
+    id,
+  }: GenericIdParameter): Promise<UserOutput | null> {
+    return User.findOne({
+      where: { id },
+      attributes: [
+        'id',
+        'firstName',
+        'lastName',
+        'username',
+        'avatarUrl',
+        'email',
+      ],
+    })
+  }
+
   public static async getByUsername({
     username,
   }: {
     username: string
   }): Promise<UserOutput | null> {
     return User.findOne({ where: { username } })
+  }
+
+  public static async getByEmail({
+    email,
+  }: {
+    email: string
+  }): Promise<UserOutput | null> {
+    return User.findOne({ where: { email } })
+  }
+
+  public static async update(payload: Partial<UserInput> & { userId: number }) {
+    const user = await User.findOne({
+      where: { id: payload.userId },
+    })
+    user?.set(payload)
+    await user?.save()
+    return payload
   }
 }
