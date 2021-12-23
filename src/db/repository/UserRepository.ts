@@ -31,7 +31,14 @@ export default class UserRepository {
   public static async getUserWithPosts({ username }: { username: string }) {
     return User.findOne({
       where: { username },
-      attributes: ['id', 'firstName', 'lastName', 'email', 'username'],
+      attributes: [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'username',
+        'avatarUrl',
+      ],
       include: [
         {
           model: Post,
@@ -42,7 +49,14 @@ export default class UserRepository {
             {
               model: User,
               as: 'user',
-              attributes: ['id', 'username', 'firstName', 'lastName'],
+              attributes: [
+                'id',
+                'username',
+                'firstName',
+                'lastName',
+                'avatarUrl',
+                'email',
+              ],
             },
             { model: PostComment, as: 'comments' },
             { model: PostLike, as: 'likes', attributes: ['id', 'userId'] },
@@ -63,7 +77,7 @@ export default class UserRepository {
   }: GenericIdParameter): Promise<UserOutput | null> {
     return User.findOne({
       where: { id },
-      attributes: ['id', 'firstName', 'lastName', 'username'],
+      attributes: ['id', 'firstName', 'lastName', 'username', 'avatarUrl'],
     })
   }
 
@@ -83,8 +97,7 @@ export default class UserRepository {
     return User.findOne({ where: { email } })
   }
 
-  public static async update(payload: UserInput & { userId: number }) {
-    console.log(payload)
+  public static async update(payload: Partial<UserInput> & { userId: number }) {
     const user = await User.findOne({
       where: { id: payload.userId },
     })

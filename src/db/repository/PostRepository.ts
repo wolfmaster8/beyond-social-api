@@ -15,7 +15,14 @@ export default class PostRepository {
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'username', 'firstName', 'lastName'],
+          attributes: [
+            'id',
+            'username',
+            'firstName',
+            'lastName',
+            'avatarUrl',
+            'email',
+          ],
         },
         { model: PostComment, as: 'comments' },
         { model: PostLike, as: 'likes', attributes: ['id', 'userId'] },
@@ -30,7 +37,14 @@ export default class PostRepository {
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'username', 'firstName', 'lastName'],
+          attributes: [
+            'id',
+            'username',
+            'firstName',
+            'lastName',
+            'avatarUrl',
+            'email',
+          ],
         },
         {
           model: PostComment,
@@ -41,7 +55,14 @@ export default class PostRepository {
             {
               model: User,
               as: 'user',
-              attributes: ['id', 'username', 'firstName', 'lastName'],
+              attributes: [
+                'id',
+                'username',
+                'firstName',
+                'lastName',
+                'avatarUrl',
+                'email',
+              ],
             },
           ],
         },
