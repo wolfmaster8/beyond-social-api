@@ -17,6 +17,9 @@
 ### Subida de Archivos
 * Usualmente utilizaria servicios como S3 de AWS o Blob Storage de Azure para subir archivos. En este caso, los archivos quedan de forma local en la API en la carpeta `uploads`.
 
+### Tests
+* Por tiempo, decidí solo realizar algunos tests automatizados.
+
 ## Configurando el Proyecto
 ### Requisitos
 * **NodeJS**: versión 12 o mayor
@@ -33,3 +36,10 @@
 ### Ejecución
 Para ejecutar la API en modo desarrollo, ejecuta en tu consola `yarn dev` o `npm run dev`.
 Deberías ver un mensaje en la consola con la URL de la API.
+
+## Scripts Disponibles
+### `yarn dev`
+Inicia el servidor de desarrollo. Este servidor se actualiza con cada cambio.
+
+### `yarn build`
+Realiza el build de la aplicación.

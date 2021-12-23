@@ -77,7 +77,14 @@ export default class UserRepository {
   }: GenericIdParameter): Promise<UserOutput | null> {
     return User.findOne({
       where: { id },
-      attributes: ['id', 'firstName', 'lastName', 'username', 'avatarUrl'],
+      attributes: [
+        'id',
+        'firstName',
+        'lastName',
+        'username',
+        'avatarUrl',
+        'email',
+      ],
     })
   }
 

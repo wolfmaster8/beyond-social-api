@@ -10,7 +10,7 @@ export default class PostLikeService {
       userId: payload.userId,
     })
     if (likeAlreadyExists) {
-      return PostLikeRepository.delete({ id: likeAlreadyExists.id })
+      return PostLikeRepository.delete({ id: Number(likeAlreadyExists.id) })
     }
     return PostLikeRepository.create(payload)
   }
